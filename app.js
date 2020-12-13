@@ -435,8 +435,8 @@ function updateCommandCenter()
     <h4>Terran Command Center</h4>
     </div>
     <h6>Destroy this to win!</h6>
-    <h6>Zergling damage: <span id="zerglingDamage">${zerglingDamage}</span> <h6>
-    <h6>Hydralisk damage: <span id="hydraliskDamage">${hydraliskDamage}</span> <h6>
+    <h6>Zergling damage/interval: <span id="zerglingDamage">${zerglingDamage}</span> <h6>
+    <h6>Hydralisk damage/interval: <span id="hydraliskDamage">${hydraliskDamage}</span> <h6>
     <div class="healthBar">
                   <div class="healthPercent" style="width: ${percentHealth}%">
                   </div>
@@ -550,7 +550,7 @@ function checkForNewEvent()
         case "Ghost":
           imageToUse = "resources/images/ghost.png";
           cardName = "Nuclear Missile";
-          description = "Nuclear launch detected! Find and click the invisible ghost on the screen quickly to stop it!";
+          description = "Nuclear launch detected! Find and click the invisible ghost on the screen quickly to stop it! Your mouse will crosshair over it.";
           soundFile = "resources/sound/nukeSound.wav";
           deployGhost();
           break;
