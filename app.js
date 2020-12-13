@@ -354,7 +354,7 @@ function addCard(unit)
       cardName = "Hydralisk"
       description = "Ranged attack unit";
       mineralCost = fighters.hydralisk.mineralPrice;
-      gasCount = fighters.hydralisk.gasPrice;
+      gasCost = fighters.hydralisk.gasPrice;
       count = fighters.hydralisk.quantity;
       buyFunction = "buyHydralisk()";
       mineralCostID = "hydraliskMineral";
