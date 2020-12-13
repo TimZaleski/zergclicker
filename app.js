@@ -38,8 +38,8 @@ var canClick = true;
 var unauthorizedPlay = true;
 
 let commandCenter = {
-  currentHealth: 100000,
-  totalHealth: 100000
+  currentHealth: 200000,
+  totalHealth: 200000
 }
 
 let clickUpgrades = {
@@ -595,8 +595,8 @@ function deployGhost()
   el.style.position = "absolute"; 
   el.style.left = x + 'vw'; 
   el.style.top = y + 'vh'; 
-  el.style.width = "200px";
-  el.style.height = "200px";
+  el.style.width = "250px";
+  el.style.height = "250px";
   el.style.cursor = "crosshair";
   el.style.caretColor = "red";
   el.id = "nukeGhost";
@@ -627,10 +627,10 @@ function nuke()
 {
   var audio = new Audio("resources/sound/zerglingDeath.wav");
   audio.play();
-  clickUpgrades.moreDrones.quantity = Math.floor(clickUpgrades.moreDrones.quantity * 0.2);
-  automaticUpgrades.moreDrones.quantity = Math.floor(automaticUpgrades.moreDrones.quantity * 0.2);
-  fighters.zergling.quantity = Math.floor(fighters.zergling.quantity * 0.2);
-  fighters.hydralisk.quantity = Math.floor(fighters.hydralisk.quantity * 0.2);
+  clickUpgrades.moreDrones.quantity = Math.floor(clickUpgrades.moreDrones.quantity * 0.5);
+  automaticUpgrades.moreDrones.quantity = Math.floor(automaticUpgrades.moreDrones.quantity * 0.5);
+  fighters.zergling.quantity = Math.floor(fighters.zergling.quantity * 0.5);
+  fighters.hydralisk.quantity = Math.floor(fighters.hydralisk.quantity * 0.5);
   document.getElementById("nukeGhost").remove();
   resetEvent();
   document.getElementById("droneClick").innerText = clickUpgrades.moreDrones.quantity;
