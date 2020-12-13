@@ -8,13 +8,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <!-- Bootstrap CSS -->
+  
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <audio id="bgMusic"></audio>
+  
   <header class="container-fluid">
     <div class="row text-center">
       <div class="col">
@@ -23,24 +24,49 @@
     </div>
   </header>
   <main class="container-fluid">
-    <div class="row mt-5 justify-content-around" id="items">
 
+    <div class="row mt-5 justify-content-around">
+      <div class="col-md-12 text-center">
+        <div>
+          <span><h3>Minerals: <span id="mineralCount"></span></h3></span>
+        </div>
+        <div>
+          <span><h3>Vespene Gas: <span id="gasCount"></span></h3></span>
+        </div>  
+        <div>
+          <span><h3>Supply: <span id="supplyCount"></span></h3></span>
+        </div>
+      </div>
     </div>
+
     <div class="row">
-      <div class="col-6">
-        <h3>Total : $ <span id="total"></span></h3>
-        <p id="cart"></p>
-        <button class="btn-success btn" > Buy Now!</button>
+      <div class="col-md-4 text-center">
+        <img src="resources/images/minerals.jpg" alt="minerals" class="pointerHover" onclick="mineMineralsClick()">
       </div>
-      <div class="col-6">
-        <h3 id="message" class=" text-success"></h3>
+      <div class="col-md-4" id="commandCenter">
+      </div>
+      <div class="col-md-4 text-center">
+        <img src="resources/images/gas.jpg" alt="gas" class="pointerHover" onclick="mineGasClick()">
       </div>
     </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="unitList" id="buyUnits">
+        </div>
+      </div>
+    </div>
+
   </main>
+
+
   <footer class=" container-fluid">
-    <div class="row text-center">
-      <div class="col"">
-        <h3></h3>
+    <div class="row">
+      <div class="col-6 text-center">
+        <button class="myButton" onclick="save()">Save</button>
+      </div>
+      <div class="col-6 text-center">
+        <button class="myButton" onclick="load()">Load</button>
       </div>
     </div>
   </footer>
