@@ -20,6 +20,8 @@ let automaticGasMultiplyModifier = 1;
 let miningSoundCheck = true;
 let endgame = false;
 
+let clearedToNuke = false;
+
 var moreMinerals = new Audio("resources/sound/moreMineralsSound.wav");
 var moreGas = new Audio("resources/sound/moreGasSound.wav");
 var moreOverlords = new Audio("resources/sound/moreOverlordsSound.wav");
@@ -27,6 +29,8 @@ var droneSounds = ['droneSound1', 'droneSound2', 'droneSound3', 'droneSound4', '
 var zerglingSounds = ['zerglingSound1', 'zerglingSound2', 'zerglingSound3', 'zerglingSound4'];
 var hydraliskSounds = ['hydraliskSound1', 'hydraliskSound2', 'hydraliskSound3', 'hydraliskSound4'];
 var overlordSounds = ['overlordSound1', 'overlordSound2', 'overlordSound3', 'overlordSound4'];
+
+var eventList = ['Ghost']; // 'Siege Tank'
 
 var secondsToUse = 0;
 var minutesToUse = 0;
@@ -461,11 +465,32 @@ function updateCounts()
   supplyCount = clickUpgrades.moreDrones.quantity + automaticUpgrades.moreDrones.quantity + fighters.zergling.quantity + fighters.hydralisk.quantity + 1;
   totalSupply = overlords.quantity * overlords.supply;
   let supply = `${supplyCount}/${totalSupply}`;
+
+  let timerBar = document.getElementById("timerBar");
+  if(timerBar)
+  {
+    let percentTime = Math.round(((15000 - (Date.now() - eventCountdownTimer)) / 15000) * 100);
+
+    if (percentTime > 100)
+    {
+      percentTime = 100;
+    }
+    if (percentTime <= 0)
+    {
+      percentTime = 0;
+    }
+
+
+    let content = `<div class="timerPercent" style="width: ${percentTime}%">
+    </div>`;
+    timerBar.innerHTML = content;
+  }
   document.getElementById("mineralCount").innerText = mineralCount.toString();
   document.getElementById("gasCount").innerText = gasCount.toString();
   document.getElementById("supplyCount").innerText = supply;
   updateCommandCenter();
   checkForNewCards();
+  checkForNewEvent();
   setTimeout(() => {
     updateCounts();
   }, 500);
@@ -484,6 +509,7 @@ function updateCountsImmediate()
 function playMusic()
 {
   var audio = new Audio("resources/sound/zergTwoMusic.wav");
+  audio.volume = 0.6;
   audio.play();
   startMusic = false;
   setTimeout(() => {
@@ -503,6 +529,131 @@ function checkForNewCards()
   }
 }
 
+function checkForNewEvent()
+{
+  if (eventTimer <= Date.now() - 60000)
+  {
+    if (Math.floor(Math.random() * Math.floor(10)) === 9)
+    {
+      eventTimer = Date.now();
+      var event = eventList[Math.floor(Math.random() * eventList.length)];
+      let container = document.getElementById("eventArea");
+      let imageToUse = "";
+      let cardName = "";
+      let description = "";
+      let soundFile = "";
+      let percentTime = 100;
+
+      var content = ``;
+      switch (event)
+      {
+        case "Ghost":
+          imageToUse = "resources/images/ghost.png";
+          cardName = "Nuclear Missile";
+          description = "Nuclear launch detected! Find and click the invisible ghost on the screen quickly to stop it!";
+          soundFile = "resources/sound/nukeSound.wav";
+          deployGhost();
+          break;
+        case "Siege Tank":
+          imageToUse = "resources/images/siegeMode.png";
+          cardName = "Siege Tank";
+          description = "They're sieging the high ground! Burrow your drones before it attacks.";
+          soundFile = "resources/sound/siegeDeploySound.wav";
+          break;
+        default:
+          break;
+      }
+
+      content = `
+      <div class="col-md-6 shadow p-3 mb-5 bg-black rounded ">
+        <div class="text-center">
+        <img src="${imageToUse}" class="img-fluid" alt="eventImg">
+        <h4>${cardName}</h4>
+        </div>
+            <h6>${description}</h6>
+            <div id="timerBar" class="timerBar">
+                  <div class="timerPercent" id="timerPercent" style="width: ${percentTime}%">
+                  </div>
+                </div>
+        </div>
+
+        `;
+
+      container.innerHTML = content;
+      var audio = new Audio(soundFile);
+      audio.play();
+    }
+  }
+}
+
+function deployGhost()
+{
+  var x = Math.floor(Math.random() * 90); 
+  var y = Math.floor(Math.random() * 90) 
+  var el = document.createElement("div");
+
+  el.style.position = "absolute"; 
+  el.style.left = x + 'vw'; 
+  el.style.top = y + 'vh'; 
+  el.style.width = "200px";
+  el.style.height = "200px";
+  el.style.cursor = "crosshair";
+  el.style.caretColor = "red";
+  el.id = "nukeGhost";
+  el.onclick = removeGhost;
+  clearedToNuke = true;
+  eventCountdownTimer = Date.now();
+  setTimeout(() => {
+    if (clearedToNuke)
+    {
+      nuke();
+    }
+  }, 15000);
+
+  document.getElementById("main").appendChild(el);
+
+}
+
+function removeGhost()
+{
+  clearedToNuke = false;
+  var audio = new Audio("resources/sound/ghostDeath.wav");
+  audio.play();
+  document.getElementById("nukeGhost").remove();
+  resetEvent();
+}
+
+function nuke()
+{
+  var audio = new Audio("resources/sound/zerglingDeath.wav");
+  audio.play();
+  clickUpgrades.moreDrones.quantity = Math.floor(clickUpgrades.moreDrones.quantity * 0.2);
+  automaticUpgrades.moreDrones.quantity = Math.floor(automaticUpgrades.moreDrones.quantity * 0.2);
+  fighters.zergling.quantity = Math.floor(fighters.zergling.quantity * 0.2);
+  fighters.hydralisk.quantity = Math.floor(fighters.hydralisk.quantity * 0.2);
+  document.getElementById("nukeGhost").remove();
+  resetEvent();
+  document.getElementById("droneClick").innerText = clickUpgrades.moreDrones.quantity;
+  document.getElementById("droneAuto").innerText = automaticUpgrades.moreDrones.quantity;
+  document.getElementById("zergling").innerText = fighters.zergling.quantity;
+  document.getElementById("hydralisk").innerText = fighters.hydralisk.quantity;
+}
+
+function resetEvent()
+{
+  var container = document.getElementById("eventArea");
+  var content =  `
+  <div class="col-md-6 shadow p-3 mb-5 bg-black rounded ">
+        <div class="text-center">
+        <h4>Event</h4>
+        </div>
+        <h6>No event currently. Time to macro up! Click the resources on the left to mine. More units unlock with high mineral count.</h6>
+    </div>
+    `;
+
+  container.innerHTML = content;
+}
+
 function save()
 {
   window.localStorage.setItem('commandCenter', JSON.stringify(commandCenter));
@@ -511,6 +662,7 @@ function save()
   window.localStorage.setItem('auto', JSON.stringify(automaticUpgrades));
   window.localStorage.setItem('overlords', JSON.stringify(overlords));
   window.localStorage.setItem('startTime', JSON.stringify(startTime));
+  window.localStorage.setItem('eventTime', JSON.stringify(eventTimer));
   window.localStorage.setItem('minerals', JSON.stringify(mineralCount));
   window.localStorage.setItem('gas', JSON.stringify(gasCount));
 }
@@ -522,6 +674,7 @@ function load()
   clickUpgrades = JSON.parse(window.localStorage.getItem('clickers'));
   automaticUpgrades = JSON.parse(window.localStorage.getItem('auto'));
   startTime = JSON.parse(window.localStorage.getItem('startTime'));
+  eventTimer = JSON.parse(window.localStorage.getItem('eventTimer'));
   mineralCount = JSON.parse(window.localStorage.getItem('minerals'));
   gasCount = JSON.parse(window.localStorage.getItem('gas'));
   overlords = JSON.parse(window.localStorage.getItem('overlords'));
@@ -537,6 +690,8 @@ function load()
 }
 
 var startTime = Date.now();
+var eventTimer = Date.now();
+var eventCountdownTimer = Date.now();
 addCard("droneClick");
 addCard("droneAuto");
 addCard("overlord");

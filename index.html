@@ -23,7 +23,7 @@
       </div>
     </div>
   </header>
-  <main class="container-fluid">
+  <main class="container-fluid" id="main">
 
     <div class="row mt-5 justify-content-around">
       <div class="col-md-12 text-center">
@@ -42,14 +42,21 @@
     <div class="row">
       <div class="col-md-4 text-center">
         <img src="resources/images/minerals.jpg" alt="minerals" class="pointerHover" onclick="mineMineralsClick()">
+        <img src="resources/images/gas.jpg" alt="gas" class="pointerHover" onclick="mineGasClick()">
       </div>
       <div class="col-md-4" id="commandCenter">
       </div>
-      <div class="col-md-4 text-center">
-        <img src="resources/images/gas.jpg" alt="gas" class="pointerHover" onclick="mineGasClick()">
-      </div>
+      <div class="col-md-4 justify-items-center">
+        <div class="unitList" id="eventArea">
+          <div class="col-md-6 shadow p-3 mb-5 bg-black rounded ">
+            <div class="text-center">
+            <h4>Event</h4>
+            </div>
+            <h6>No event currently. Time to macro up! Click the resources on the left to mine. More units unlock with high mineral count.</h6>
+        </div>
+        </div>
     </div>
-
+    </div>
     <div class="row">
       <div class="col-md-12">
         <div class="unitList" id="buyUnits">
@@ -60,7 +67,7 @@
   </main>
 
 
-  <footer class=" container-fluid">
+  <footer class="container-fluid">
     <div class="row">
       <div class="col-6 text-center">
         <button class="myButton" onclick="save()">Save</button>
