@@ -1,0 +1,30 @@
+:root {
+  --main-bg-color: rgb(36, 36, 36);
+  --main-txt-color: purple;
+}
+
+@font-face {
+  font-family: starcraftFont;
+  src: url(resources/font/StarcraftNormal.ttf);
+}
+
+body { 
+  min-height: 100vh; 
+  display: flex; 
+  flex-direction: column; 
+  background-color: var(--main-bg-color);
+}
+
+header{ min-height: 8vh; 
+  font-family: starcraftFont; 
+  background-color: var(--main-bg-color); 
+  color: var(--main-txt-color);
+} 
+main{
+  flex-grow: 1;
+}
+
+footer{ 
+  min-height: 8vh;
+  background-color: var(--main-bg-color);
+}
