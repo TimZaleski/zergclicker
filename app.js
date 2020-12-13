@@ -22,6 +22,7 @@ let endgame = false;
 
 var moreMinerals = new Audio("resources/sound/moreMineralsSound.wav");
 var moreGas = new Audio("resources/sound/moreGasSound.wav");
+var moreOverlords = new Audio("resources/sound/moreOverlordsSound.wav");
 var droneSounds = ['droneSound1', 'droneSound2', 'droneSound3', 'droneSound4', 'droneSound5'];
 var zerglingSounds = ['zerglingSound1', 'zerglingSound2', 'zerglingSound3', 'zerglingSound4'];
 var hydraliskSounds = ['hydraliskSound1', 'hydraliskSound2', 'hydraliskSound3', 'hydraliskSound4'];
@@ -162,16 +163,23 @@ function buyClickDrone()
   }
   else
   {
-    mineralCount = mineralCount - clickUpgrades.moreDrones.mineralPrice;
-    clickUpgrades.moreDrones.quantity++;
-    clickUpgrades.moreDrones.mineralPrice+= 20;
-    var sound = droneSounds[Math.floor(Math.random() * droneSounds.length)];
-    var audio = new Audio("resources/sound/"+ sound +".wav");
-    audio.play();
-    document.getElementById("droneClick").innerText = clickUpgrades.moreDrones.quantity;
-    document.getElementById("clickDroneMineral").innerText = clickUpgrades.moreDrones.mineralPrice;
-    document.getElementById("clickDroneGas").innerText = clickUpgrades.moreDrones.gasPrice;
-    updateCountsImmediate();
+    if (supplyCount === totalSupply)
+    {
+      moreOverlords.play();
+    }
+    else
+    {
+      mineralCount = mineralCount - clickUpgrades.moreDrones.mineralPrice;
+      clickUpgrades.moreDrones.quantity++;
+      clickUpgrades.moreDrones.mineralPrice+= 20;
+      var sound = droneSounds[Math.floor(Math.random() * droneSounds.length)];
+      var audio = new Audio("resources/sound/"+ sound +".wav");
+      audio.play();
+      document.getElementById("droneClick").innerText = clickUpgrades.moreDrones.quantity;
+      document.getElementById("clickDroneMineral").innerText = clickUpgrades.moreDrones.mineralPrice;
+      document.getElementById("clickDroneGas").innerText = clickUpgrades.moreDrones.gasPrice;
+      updateCountsImmediate();
+    }
   }
 }
 
@@ -206,16 +214,23 @@ function buyAutomaticDrone()
   }
   else
   {
-    mineralCount = mineralCount - automaticUpgrades.moreDrones.mineralPrice;
-    automaticUpgrades.moreDrones.quantity++;
-    automaticUpgrades.moreDrones.mineralPrice += 100;
-    var sound = droneSounds[Math.floor(Math.random() * droneSounds.length)];
-    var audio = new Audio("resources/sound/"+ sound +".wav");
-    audio.play();
-    document.getElementById("droneAuto").innerText = automaticUpgrades.moreDrones.quantity;
-    document.getElementById("autoDroneMineral").innerText = automaticUpgrades.moreDrones.mineralPrice;
-    document.getElementById("autoDroneGas").innerText = automaticUpgrades.moreDrones.gasPrice;
-    updateCountsImmediate();
+    if (supplyCount === totalSupply)
+    {
+      moreOverlords.play();
+    }
+    else
+    {
+      mineralCount = mineralCount - automaticUpgrades.moreDrones.mineralPrice;
+      automaticUpgrades.moreDrones.quantity++;
+      automaticUpgrades.moreDrones.mineralPrice += 100;
+      var sound = droneSounds[Math.floor(Math.random() * droneSounds.length)];
+      var audio = new Audio("resources/sound/"+ sound +".wav");
+      audio.play();
+      document.getElementById("droneAuto").innerText = automaticUpgrades.moreDrones.quantity;
+      document.getElementById("autoDroneMineral").innerText = automaticUpgrades.moreDrones.mineralPrice;
+      document.getElementById("autoDroneGas").innerText = automaticUpgrades.moreDrones.gasPrice;
+      updateCountsImmediate();
+    }
   }
 }
 
@@ -228,16 +243,23 @@ function buyZergling()
   }
   else
   {
-    mineralCount = mineralCount - fighters.zergling.mineralPrice;
-    fighters.zergling.quantity++;
-    fighters.zergling.mineralPrice+= 20;
-    var sound = zerglingSounds[Math.floor(Math.random() * zerglingSounds.length)];
-    var audio = new Audio("resources/sound/"+ sound +".wav");
-    audio.play();
-    document.getElementById("zergling").innerText = fighters.zergling.quantity;
-    document.getElementById("zerglingMineral").innerText = fighters.zergling.mineralPrice;
-    document.getElementById("zerglingGas").innerText = fighters.zergling.gasPrice;
-    updateCountsImmediate();
+    if (supplyCount === totalSupply)
+    {
+      moreOverlords.play();
+    }
+    else
+    {
+      mineralCount = mineralCount - fighters.zergling.mineralPrice;
+      fighters.zergling.quantity++;
+      fighters.zergling.mineralPrice+= 20;
+      var sound = zerglingSounds[Math.floor(Math.random() * zerglingSounds.length)];
+      var audio = new Audio("resources/sound/"+ sound +".wav");
+      audio.play();
+      document.getElementById("zergling").innerText = fighters.zergling.quantity;
+      document.getElementById("zerglingMineral").innerText = fighters.zergling.mineralPrice;
+      document.getElementById("zerglingGas").innerText = fighters.zergling.gasPrice;
+      updateCountsImmediate();
+    }
   }
 }
 
@@ -256,18 +278,25 @@ function buyHydralisk()
     }
     else
     {
-      mineralCount = mineralCount - fighters.hydralisk.mineralPrice;
-      gasCount = gasCount - fighters.hydralisk.gasPrice;
-      fighters.hydralisk.quantity++;
-      fighters.hydralisk.mineralPrice+= 75;
-      fighters.hydralisk.gasPrice+= 25;
-      var sound = hydraliskSounds[Math.floor(Math.random() * hydraliskSounds.length)];
-      var audio = new Audio("resources/sound/"+ sound +".wav");
-      audio.play();
-      document.getElementById("hydralisk").innerText = fighters.hydralisk.quantity;
-      document.getElementById("hydraliskMineral").innerText = fighters.hydralisk.mineralPrice;
-      document.getElementById("hydraliskGas").innerText = fighters.hydralisk.gasPrice;
-      updateCountsImmediate();
+      if (supplyCount === totalSupply)
+      {
+        moreOverlords.play();
+      }
+      else
+      {
+        mineralCount = mineralCount - fighters.hydralisk.mineralPrice;
+        gasCount = gasCount - fighters.hydralisk.gasPrice;
+        fighters.hydralisk.quantity++;
+        fighters.hydralisk.mineralPrice+= 75;
+        fighters.hydralisk.gasPrice+= 25;
+        var sound = hydraliskSounds[Math.floor(Math.random() * hydraliskSounds.length)];
+        var audio = new Audio("resources/sound/"+ sound +".wav");
+        audio.play();
+        document.getElementById("hydralisk").innerText = fighters.hydralisk.quantity;
+        document.getElementById("hydraliskMineral").innerText = fighters.hydralisk.mineralPrice;
+        document.getElementById("hydraliskGas").innerText = fighters.hydralisk.gasPrice;
+        updateCountsImmediate();
+      }
     }  
   }
 }
@@ -429,7 +458,7 @@ function updateCounts()
 {
   mineralCount = mineralCount + Math.round(((automaticUpgrades.moreDrones.quantity) * automaticMineralMultiplyModifier));
   gasCount = gasCount + Math.round(((automaticUpgrades.moreDrones.quantity) * automaticGasMultiplyModifier));
-  supplyCount = clickUpgrades.moreDrones.quantity + automaticUpgrades.moreDrones.quantity + fighters.zergling.quantity + fighters.hydralisk.quantity;
+  supplyCount = clickUpgrades.moreDrones.quantity + automaticUpgrades.moreDrones.quantity + fighters.zergling.quantity + fighters.hydralisk.quantity + 1;
   totalSupply = overlords.quantity * overlords.supply;
   let supply = `${supplyCount}/${totalSupply}`;
   document.getElementById("mineralCount").innerText = mineralCount.toString();
@@ -444,7 +473,7 @@ function updateCounts()
 
 function updateCountsImmediate()
 {
-  supplyCount = clickUpgrades.moreDrones.quantity + automaticUpgrades.moreDrones.quantity + fighters.zergling.quantity + fighters.hydralisk.quantity;
+  supplyCount = clickUpgrades.moreDrones.quantity + automaticUpgrades.moreDrones.quantity + fighters.zergling.quantity + fighters.hydralisk.quantity + 1;
   let supply = `${supplyCount}/${totalSupply}`;
   document.getElementById("mineralCount").innerText = mineralCount.toString();
   document.getElementById("gasCount").innerText = gasCount.toString();
